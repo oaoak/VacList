@@ -1,3 +1,72 @@
+## Project Setup
+
+Follow these steps to set up the project and install the necessary dependencies:
+
+### 1. Clone the Repository
+If you haven’t cloned the project yet, run the following command in your terminal:
+
+```
+git clone <repository_url>
+cd <project_directory>
+```
+
+### 2. Install Node.js (If not already installed)
+If you don't have Node.js installed, follow these steps:
+
+For Windows/macOS:
+Download and install the latest LTS version from the Node.js official website.
+
+Once installed, verify the installation with:
+
+```
+node -v
+npm -v
+```
+
+## Set Up MySQL (Locally or with Docker)
+### Option 1: Install MySQL Locally
+Download MySQL from the MySQL website, then follow the installation steps for your OS.
+
+After installation, start MySQL:
+
+```
+mysql.server start
+```
+
+Log into MySQL:
+
+```
+mysql -u root -p
+```
+Enter the password you set during the MySQL installation.
+
+### Option 2: Use Docker for MySQL
+If you prefer to run MySQL inside a Docker container, follow these steps:
+
+Pull MySQL Docker Image: Run the following command to pull the latest MySQL Docker image:
+
+```
+docker pull mysql:latest
+```
+
+Start MySQL in a Docker Container: Once the image is pulled, run MySQL in a Docker container with the following command:
+
+```
+docker run --name mysql-container -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:latest
+```
+
+* --name mysql-container: This gives the container a name mysql-container.
+* -e MYSQL_ROOT_PASSWORD=root: This sets the MySQL root password to root. You can change this value if desired.
+* -d: This runs the container in detached mode.
+* -p 3306:3306: This maps port 3306 on your local machine to port 3306 in the container (MySQL’s default port).
+  
+Access MySQL in the Docker Container: Once the container is running, you can access MySQL by executing the following command:
+
+```
+docker exec -it mysql-container mysql -u root -p
+```
+Enter the password (root in this case, or whatever you set in step 2) when prompted.
+
 ## Database Setup
 
 Follow these steps to set up the database for the backend:
