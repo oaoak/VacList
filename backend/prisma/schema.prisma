@@ -1,0 +1,93 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+model User {
+  id        Int        @id @default(autoincrement())
+  username  String
+  password  String
+  favorites Favorite[]
+  visits    Visit[]
+  reviews   Review[]
+}
+
+model VacationSpot {
+  id        Int        @id @default(autoincrement())
+  name      String
+  location  String
+  category  Category
+  favorites Favorite[]
+  visits    Visit[]
+  reviews   Review[]
+}
+
+model Favorite {
+  user_id      Int
+  spot_id      Int
+  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  vacationSpot VacationSpot @relation(fields: [spot_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, spot_id]) // Composite Primary Key
+}
+
+model Visit {
+  user_id      Int
+  spot_id      Int
+  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  vacationSpot VacationSpot @relation(fields: [spot_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, spot_id]) // Composite Primary Key
+}
+
+model Review {
+  id           Int          @id @default(autoincrement())
+  user_id      Int
+  spot_id      Int
+  rating       Ratings
+  review_text  String?
+  user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  vacationSpot VacationSpot @relation(fields: [spot_id], references: [id], onDelete: Cascade)
+}
+
+enum Ratings {
+  one
+  two
+  three
+  four
+  five
+}
+
+enum Category {
+  beach
+  island
+  historical
+  adventure
+  nature
+  mountain
+  temple
+  city
+  luxury
+  culinary
+  shopping
+  festival
+  wildlife
+  wellness
+  family
+  nightlife
+  romantic
+  eco_tourism
+  rural
+  diving
+}
