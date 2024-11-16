@@ -59,6 +59,8 @@ model Review {
   review_text  String?
   user         User         @relation(fields: [user_id], references: [id], onDelete: Cascade)
   vacationSpot VacationSpot @relation(fields: [spot_id], references: [id], onDelete: Cascade)
+
+  @@unique([spot_id, user_id])
 }
 
 enum Ratings {
