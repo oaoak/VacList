@@ -142,7 +142,7 @@ const LocationCard = () => {
                                 onClick={() => handleViewDetails(location.id)}
                                 className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600"
                             >
-                                View Details
+                                Reviews
                             </button>
                         </div>
                     </div>

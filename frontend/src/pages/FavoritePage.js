@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { UserContext } from "../context/UserContext";
 import Navbar from "../components/Navbar";
+import {useNavigate} from "react-router-dom";
 
 const FavoriteSpots = () => {
     const [locations, setLocations] = useState([]);
@@ -9,6 +10,7 @@ const FavoriteSpots = () => {
     const [error, setError] = useState(null);
     const [favorites, setFavorites] = useState({});
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchLocations = async () => {
@@ -67,6 +69,10 @@ const FavoriteSpots = () => {
     if (loading) return <div className="text-center text-lg">Loading...</div>;
     if (error) return <div className="text-center text-red-500">{error}</div>;
 
+    const handleViewDetails = (locationId) => {
+        navigate(`/location/${locationId}`);
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-r from-yellow-500 via-orange-500 to-purple-600 flex items-center justify-center p-6 pt-28 pb-10 px-12">
             <Navbar/>
@@ -82,7 +88,7 @@ const FavoriteSpots = () => {
                             <th className="py-2 px-4 text-left">Location</th>
                             <th className="py-2 px-4 text-left">Category</th>
                             <th className="py-2 px-4 text-left">Favorites</th>
-                            <th className="py-2 px-4 text-left">Action</th>
+                            <th className="py-2 px-4 pl-28 text-left" >Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -98,6 +104,13 @@ const FavoriteSpots = () => {
                                         className="bg-red-500 text-white text-center py-1 px-4 rounded hover:bg-red-600"
                                     >
                                         Unfavorite
+                                    </button>
+                                    <a className="px-5"></a>
+                                    <button
+                                        onClick={() => handleViewDetails(location.id)}
+                                        className="bg-purple-500 text-white text-center py-1 px-4 rounded hover:bg-purple-600"
+                                    >
+                                        Reviews
                                     </button>
                                 </td>
                             </tr>
