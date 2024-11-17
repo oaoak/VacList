@@ -118,6 +118,29 @@ const LocationDetailsPage = () => {
         );
     };
 
+    const categoryStyles = {
+        beach: "bg-blue-100 text-blue-800",
+        island: "bg-teal-100 text-teal-800",
+        historical: "bg-yellow-100 text-yellow-800",
+        adventure: "bg-red-100 text-red-800",
+        nature: "bg-green-100 text-green-800",
+        mountain: "bg-purple-100 text-purple-800",
+        temple: "bg-orange-100 text-orange-800",
+        city: "bg-gray-100 text-gray-800",
+        luxury: "bg-pink-100 text-pink-800",
+        culinary: "bg-indigo-100 text-indigo-800",
+        shopping: "bg-cyan-100 text-cyan-800",
+        festival: "bg-lime-100 text-lime-800",
+        wildlife: "bg-teal-200 text-teal-900",
+        wellness: "bg-green-200 text-green-900",
+        family: "bg-red-200 text-red-900",
+        nightlife: "bg-purple-200 text-purple-900",
+        romantic: "bg-pink-200 text-pink-900",
+        eco_tourism: "bg-yellow-200 text-yellow-900",
+        rural: "bg-brown-100 text-brown-800",
+        diving: "bg-blue-200 text-blue-900"
+    };
+
     return (
         <div className="min-h-screen bg-gradient-to-r from-yellow-500 via-orange-500 to-purple-600 flex items-center justify-center p-6 pt-28 pb-10 px-12">
             <Navbar/>
@@ -125,7 +148,7 @@ const LocationDetailsPage = () => {
                 <div className="bg-white rounded-lg shadow-md p-6">
                     <h1 className="text-4xl font-bold text-gray-800 mb-4">{location.name}</h1>
                     <p className="text-gray-700 mb-4">{location.location}</p>
-                    <p className="text-gray-700 mb-4">{location.category}</p>
+                    <p className="text-gray-700 mb-4"><span className={`px-3 py-1 rounded-full font-bold ${categoryStyles[location.category]}`}>{location.category.toUpperCase()}</span></p>
                 </div>
 
                 <div className="bg-white rounded-lg shadow-md mt-6 p-6">
@@ -223,10 +246,24 @@ const LocationDetailsPage = () => {
                             {reviews.map((review) => (
                                 <div key={review.id} className="mb-4 p-4 border-b">
                                     <div className="flex items-center">
-                                        <div className="mr-4">
+                                        <div className="mr-4 flex items-center space-x-2">
                                             <strong>{review.user.username}</strong>
                                         </div>
                                         {displayStars(review.rating)} {/* Call the function to display stars based on rating */}
+                                    </div>
+                                    <div className="mr-4 flex items-center space-x-2 py-2">
+                                        {review.isFavorite && (
+                                            <span
+                                                className="bg-red-100 text-red-800 text-xs font-semibold px-2 py-1 rounded-full">
+                                                        ♥
+                                                    </span>
+                                        )}
+                                        {review.visited && (
+                                            <span
+                                                className="bg-orange-100 text-orange-800 text-xs font-semibold px-2 py-1 rounded-full">
+                                                        Visited
+                                                    </span>
+                                        )}
                                     </div>
                                     <p className="text-gray-700 mt-2">{review.review_text}</p>
                                 </div>

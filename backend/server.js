@@ -295,8 +295,6 @@ app.put('/api/vacation-spots/:id/reviews/:userId', async (req, res) => {
     }
 });
 
-
-
 // Get reviews for a specific vacation spot
 app.get('/api/vacation-spots/:id/reviews', async (req, res) => {
     const { id } = req.params;
@@ -319,11 +317,66 @@ app.get('/api/vacation-spots/:id/reviews', async (req, res) => {
             },
         });
 
-        // Send the reviews back in the response
-        res.json(reviews);
+        const reviewsWithFlags = await Promise.all(
+            reviews.map(async (review) => {
+                const visit = await prisma.visit.findFirst({
+                    where: {
+                        user_id: review.user_id,
+                        spot_id: Number(id),
+                    },
+                });
+
+                const favorite = await prisma.favorite.findFirst({
+                    where: {
+                        user_id: review.user_id,
+                        spot_id: Number(id),
+                    },
+                });
+
+                return {
+                    ...review,
+                    visited: !!visit,
+                    isFavorite: !!favorite, // Add isFavorite flag
+                };
+            })
+        );
+
+        res.json(reviewsWithFlags);
     } catch (err) {
         console.error('Error fetching reviews:', err);
         res.status(500).json({ error: 'Error fetching reviews' });
+    }
+});
+
+//Create or post new visits
+app.post("/api/vacation-spots/:id/visit", async (req, res) => {
+    const { id: spot_id } = req.params;
+    const { user_id } = req.body; // Assume `user_id` is passed in the request body
+
+    try {
+        // Check if already visited
+        const existingVisit = await prisma.visit.findUnique({
+            where: {
+                user_id_spot_id: { user_id, spot_id: parseInt(spot_id) }, // Composite key
+            },
+        });
+
+        if (existingVisit) {
+            return res.status(400).json({ error: "Already visited." });
+        }
+
+        // Add to favorites
+        const visit = await prisma.visit.create({
+            data: {
+                user_id,
+                spot_id: parseInt(spot_id),
+            },
+        });
+
+        res.status(201).json(visit);
+    } catch (error) {
+        console.error("Error marking as favorite:", error);
+        res.status(500).json({ error: "Failed to mark as favorite." });
     }
 });
 

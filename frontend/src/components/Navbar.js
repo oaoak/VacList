@@ -45,7 +45,7 @@ function Navbar() {
                         <li> | </li>
                         <li className="font-bold px-7 rounded-r-lg hover:bg-red-600 hover:text-white transition-all duration-300">
                             <NavLink
-                                to="/"
+                                to="/myvisit"
                             >
                                 My Visit
                             </NavLink>

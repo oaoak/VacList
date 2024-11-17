@@ -7,6 +7,7 @@ import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import FavoritePage from "./pages/FavoritePage";
 import LocationDetailPage from "./pages/LocationDetailPage";
+import VisitPage from "./pages/VisitPage";
 import './App.css';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
               <Route path="/signup" element={<RegisterPage />} />
               <Route path="/home" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
               <Route path="/favorite" element={<ProtectedRoute><FavoritePage /></ProtectedRoute>} />
+              <Route path="/myvisit" element={<ProtectedRoute><VisitPage /></ProtectedRoute>} />
               <Route path="/location/:id" element={<ProtectedRoute><LocationDetailPage /></ProtectedRoute>} />
           </Routes>
       </Router>
