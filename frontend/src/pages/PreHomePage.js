@@ -17,7 +17,7 @@ function App() {
         <div className="min-h-screen bg-gradient-to-r from-blue-500 via-indigo-600 to-violet-700 flex items-center justify-center p-6 relative overflow-hidden">
             <div className="w-full max-w-lg bg-black rounded-xl shadow-xl p-16 transform transition-all duration-800 hover:scale-110 hover:-rotate-2 z-10 relative overflow-hidden">
                 <h1 className="text-7xl font-extrabold text-center text-white mb-8 tracking-widest transform rotate-1">
-                    Welcome to VacList!
+                    Welcome to Vacation Checklist!
                 </h1>
                 <p className="text-xl text-red-300 text-center mb-10 leading-relaxed opacity-90 transform rotate-2">
                     Mark and review your experience!
